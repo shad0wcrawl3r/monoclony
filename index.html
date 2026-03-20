@@ -22,7 +22,7 @@
     --brown:     #a16207;
     --text:      #e8e8f0;
     --dim:       #6b7280;
-    --cell-w:    calc((100vw - 16px) / 11);
+    --cell-w:    calc((100vw - 16px) / 15);
     --cell-h:    var(--cell-w);
     --pixel:     2px;
   }
@@ -41,7 +41,7 @@
   body::after {
     content: '';
     position: fixed; inset: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.15) 2px, rgba(0,0,0,.15) 4px);
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.07) 2px, rgba(0,0,0,.07) 4px);
     pointer-events: none;
     z-index: 9999;
   }
@@ -60,14 +60,14 @@
   .title-logo {
     font-size: clamp(18px, 4vw, 32px);
     color: var(--accent);
-    text-shadow: 4px 4px 0 #7a6000, 8px 8px 0 #3d3000;
+    text-shadow: 2px 2px 0 #7a6000, 0 0 16px rgba(247,201,72,.3);
     letter-spacing: 4px;
     animation: titlePulse 2s ease-in-out infinite;
     line-height: 1.6;
   }
   @keyframes titlePulse {
-    0%,100% { text-shadow: 4px 4px 0 #7a6000, 8px 8px 0 #3d3000; }
-    50%      { text-shadow: 4px 4px 0 #b38f00, 8px 8px 0 #7a6000, 0 0 30px rgba(247,201,72,.4); }
+    0%,100% { text-shadow: 2px 2px 0 #7a6000, 0 0 16px rgba(247,201,72,.3); }
+    50%      { text-shadow: 2px 2px 0 #b38f00, 0 0 24px rgba(247,201,72,.4); }
   }
   .title-sub { color: var(--green); font-size: 9px; letter-spacing: 3px; animation: blink 1s step-end infinite; }
   @keyframes blink { 50% { opacity: 0; } }
@@ -78,7 +78,7 @@
   .setup-panel {
     background: var(--panel);
     border: var(--pixel) solid var(--border);
-    box-shadow: 4px 4px 0 var(--border);
+    box-shadow: 0 4px 16px rgba(0,0,0,.4);
     padding: 24px;
     width: min(480px, 94vw);
     display: flex; flex-direction: column; gap: 16px;
@@ -108,28 +108,20 @@
     background: var(--accent); color: #000; border: none;
     font-family: 'Press Start 2P', monospace; font-size: 10px;
     padding: 12px 20px; cursor: pointer;
-    box-shadow: 4px 4px 0 #7a6000;
+    box-shadow: 0 3px 8px rgba(0,0,0,.4);
     transition: transform .1s, box-shadow .1s;
     text-transform: uppercase; letter-spacing: 1px;
   }
-  .btn:hover  { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 #7a6000; }
-  .btn:active { transform: translate(2px,2px);   box-shadow: 2px 2px 0 #7a6000; }
-  .btn-sm  { font-size: 8px; padding: 8px 14px; box-shadow: 3px 3px 0 #7a6000; }
-  .btn-xs  { font-size: 7px; padding: 5px 8px;  box-shadow: 2px 2px 0 #7a6000; }
-  .btn-green  { background: var(--green);  box-shadow: 4px 4px 0 #1a6b3a; color:#000; }
-  .btn-green:hover  { box-shadow: 6px 6px 0 #1a6b3a; }
-  .btn-green:active { box-shadow: 2px 2px 0 #1a6b3a; }
-  .btn-red    { background: var(--red);    color:#fff; box-shadow: 4px 4px 0 #7a0010; }
-  .btn-red:hover    { box-shadow: 6px 6px 0 #7a0010; }
-  .btn-red:active   { box-shadow: 2px 2px 0 #7a0010; }
-  .btn-blue   { background: var(--blue);   color:#000; box-shadow: 4px 4px 0 #0a5f80; }
-  .btn-blue:hover   { box-shadow: 6px 6px 0 #0a5f80; }
-  .btn-purple { background: var(--purple); color:#000; box-shadow: 4px 4px 0 #4a1a80; }
-  .btn-purple:hover { box-shadow: 6px 6px 0 #4a1a80; }
-  .btn-orange { background: var(--orange); color:#000; box-shadow: 4px 4px 0 #7a3a00; }
-  .btn-orange:hover { box-shadow: 6px 6px 0 #7a3a00; }
-  .btn-dim    { background: var(--dim);    color:#fff; box-shadow: 4px 4px 0 #2a2a2a; }
-  .btn-dim:hover    { box-shadow: 6px 6px 0 #2a2a2a; }
+  .btn:hover  { box-shadow: 0 5px 12px rgba(0,0,0,.5); }
+  .btn:active { box-shadow: 0 1px 4px rgba(0,0,0,.4); }
+  .btn-sm  { font-size: 8px; padding: 8px 14px; box-shadow: 0 3px 8px rgba(0,0,0,.4); }
+  .btn-xs  { font-size: 7px; padding: 5px 8px;  box-shadow: 0 3px 8px rgba(0,0,0,.4); }
+  .btn-green  { background: var(--green);  box-shadow: 0 3px 8px rgba(0,0,0,.4); color:#000; }
+  .btn-red    { background: var(--red);    color:#fff; box-shadow: 0 3px 8px rgba(0,0,0,.4); }
+  .btn-blue   { background: var(--blue);   color:#000; box-shadow: 0 3px 8px rgba(0,0,0,.4); }
+  .btn-purple { background: var(--purple); color:#000; box-shadow: 0 3px 8px rgba(0,0,0,.4); }
+  .btn-orange { background: var(--orange); color:#000; box-shadow: 0 3px 8px rgba(0,0,0,.4); }
+  .btn-dim    { background: var(--dim);    color:#fff; box-shadow: 0 3px 8px rgba(0,0,0,.4); }
   .btn-mortgaged { background: #3a1a1a; color: var(--red); border: 1px solid var(--red); box-shadow: 2px 2px 0 #7a0010; }
   .add-player-btn {
     background: none; border: var(--pixel) dashed var(--dim);
@@ -150,11 +142,11 @@
   .board-wrap { grid-column: 1; grid-row: 1; justify-self: center; }
   .board {
     display: grid;
-    grid-template-columns: repeat(11, var(--cell-w));
-    grid-template-rows: repeat(11, var(--cell-h));
-    border: 3px solid var(--accent);
-    box-shadow: 0 0 0 1px #000, 6px 6px 0 rgba(247,201,72,.3);
-    background: #0d1a0d; image-rendering: pixelated; position: relative;
+    grid-template-columns: repeat(15, var(--cell-w));
+    grid-template-rows: repeat(7, var(--cell-h));
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 24px rgba(247,201,72,.15);
+    background: #0d1a0d; position: relative;
   }
   .cell {
     border: 1px solid #1a2a1a;
@@ -212,7 +204,7 @@
     height: clamp(12px, calc(var(--cell-h) * 0.5), 26px);
     border-radius: 0;
     border: 2px solid #fff; display: flex; align-items: center; justify-content: center;
-    font-size: clamp(7px, calc(var(--cell-w) * 0.28), 14px); transition: all .5s ease; z-index: 10; image-rendering: pixelated;
+    font-size: clamp(7px, calc(var(--cell-w) * 0.28), 14px); transition: all .5s ease; z-index: 10;
   }
   .owner-dot { width: clamp(4px, calc(var(--cell-w) * 0.15), 8px); height: clamp(4px, calc(var(--cell-h) * 0.15), 8px); position: absolute; bottom: 2px; right: 2px; }
   .house-icon { position: absolute; bottom: 2px; left: 2px; font-size: clamp(5px, calc(var(--cell-w) * 0.22), 10px); }
@@ -220,13 +212,12 @@
   /* ══ SIDEBARS ══ */
   .side-left  { grid-column: 1; grid-row: 2; padding: 0; }
   .side-right { grid-column: 1; grid-row: 3; padding: 0; }
-  .side-left, .side-right { display: flex; flex-direction: row; flex-wrap: wrap; gap: 8px; }
+  .side-left, .side-right { display: flex; flex-direction: column; gap: 8px; }
 
   .player-card {
     background: var(--panel); border: 2px solid var(--border);
-    padding: 10px 12px; box-shadow: 3px 3px 0 var(--border);
+    padding: 10px 12px; box-shadow: 0 2px 8px rgba(0,0,0,.3);
     transition: border-color .3s, box-shadow .3s;
-    flex: 1; min-width: 140px;
   }
   .player-card.active-turn {
     border-color: var(--accent);
@@ -279,7 +270,7 @@
   .modal-overlay.open { display: flex; }
   .modal {
     background: var(--panel); border: 3px solid var(--accent);
-    box-shadow: 6px 6px 0 var(--accent); padding: 16px;
+    box-shadow: 0 8px 32px rgba(247,201,72,.2); padding: 16px;
     max-width: 520px; width: 100%;
     display: flex; flex-direction: column; gap: 14px;
     animation: popIn .2s ease-out;
@@ -338,6 +329,39 @@
   .mort-item .mi-status { font-size: 10px; }
   .mort-item.is-mortgaged { opacity: .7; background: #1a0a0a; }
 
+  /* ══ PLAYER NAV ══ */
+  .player-nav {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 8px; width: 100%;
+  }
+  .nav-arrow {
+    background: none; border: 1px solid var(--border); color: var(--text);
+    font-family: 'Press Start 2P', monospace; font-size: 8px;
+    padding: 6px 10px; cursor: pointer; transition: all .2s; flex-shrink: 0;
+  }
+  .nav-arrow:hover { border-color: var(--accent); color: var(--accent); }
+  .player-dots { display: flex; gap: 6px; flex: 1; justify-content: center; align-items: center; }
+  .player-dot {
+    width: 12px; height: 12px; border: 2px solid var(--border);
+    cursor: pointer; transition: all .2s; border-radius: 0;
+  }
+  .player-dot:hover { border-color: var(--accent); }
+  .player-dot.active { border-color: var(--accent); }
+  .player-dot.bankrupt { opacity: .3; }
+
+  /* ══ LOG DROPDOWN ══ */
+  .log-header {
+    cursor: pointer; background: var(--panel); border: 2px solid var(--border);
+    padding: 8px 12px; font-family: 'VT323', monospace; font-size: 15px;
+    color: var(--accent); display: flex; align-items: center;
+    justify-content: space-between; user-select: none; width: 100%;
+  }
+  .log-header:hover { border-color: var(--accent); }
+  .log-panel.log-collapsed { display: none; }
+
+  /* ══ DIE — clickable ══ */
+  .die { cursor: pointer; }
+  .die:hover { filter: brightness(1.3); }
+
   /* ══ WIN SCREEN ══ */
   #screen-win {
     background: radial-gradient(ellipse at center, #1a1a00 0%, #0a0a0f 70%);
@@ -357,10 +381,8 @@
 
   @media (min-width: 900px) {
     :root {
-      /* rectangular cells: width driven by remaining space after sidebars,
-         height driven by viewport height minus bottom bar */
-      --cell-w: clamp(28px, calc((100vw - 360px) / 11), 58px);
-      --cell-h: clamp(28px, calc((100vh - 90px)  / 11), 58px);
+      --cell-w: clamp(32px, calc((100vw - 360px) / 15), 70px);
+      --cell-h: clamp(32px, calc((100vh - 90px)  / 7),  72px);
     }
     .game-layout {
       grid-template-columns: minmax(160px, 1fr) auto minmax(160px, 1fr);
@@ -593,7 +615,7 @@ const COMMUNITY_CARDS = [
 //  GAME STATE
 // ════════════════════════════════════════════
 let G = {
-  players: [], current: 0, phase: 'roll',
+  players: [], current: 0, phase: 'roll', viewedPlayer: 0,
   ownership: {}, mortgaged: {}, houses: {},
   dice: [1,1], chanceIdx: 0, communityIdx: 0, parkingPot: 0,
   setupNames: [],
@@ -661,6 +683,7 @@ document.getElementById('btn-start-game').addEventListener('click', () => {
   }));
   G.ownership = {}; G.mortgaged = {}; G.houses = {};
   G.current = 0; G.phase = 'roll';
+  G.viewedPlayer = 0;
   showScreen('game');
   buildBoard(); buildSidebars(); renderTokens(); updateUI();
   log('GAME START! Each player has $1500','event');
@@ -670,24 +693,20 @@ document.getElementById('btn-start-game').addEventListener('click', () => {
 //  BOARD
 // ════════════════════════════════════════════
 function squareGridPos(id) {
-  if (id === 0)  return [10,10];
-  if (id === 10) return [10,0];
-  if (id === 20) return [0,0];
-  if (id === 30) return [0,10];
-  if (id >= 1  && id <= 9)  return [10, 10-id];
-  if (id >= 11 && id <= 19) return [10-(id-10), 0];
-  if (id >= 21 && id <= 29) return [0, id-20];
-  if (id >= 31 && id <= 39) return [id-30, 10];
-  return [5,5];
+  // 15-wide × 7-tall board (0-indexed)
+  if (id <= 14)  return [6, 14 - id];       // bottom row, right→left
+  if (id <= 19)  return [5 - (id - 15), 0]; // left col, bottom→top
+  if (id <= 34)  return [0, id - 20];        // top row, left→right
+  return [id - 34, 14];                       // right col, top→bottom
 }
 
 function buildBoard() {
   const board = document.getElementById('board');
   board.querySelectorAll('.cell').forEach(c => c.remove());
 
-  for (let row = 0; row < 11; row++) {
-    for (let col = 0; col < 11; col++) {
-      if (row >= 1 && row <= 9 && col >= 1 && col <= 9) continue;
+  for (let row = 0; row < 7; row++) {
+    for (let col = 0; col < 15; col++) {
+      if (row >= 1 && row <= 5 && col >= 1 && col <= 13) continue;
       const sq = SQUARES.find(s => { const [r,c] = squareGridPos(s.id); return r===row && c===col; });
       const cell = document.createElement('div');
       cell.className = 'cell';
@@ -702,13 +721,19 @@ function buildBoard() {
   if (!board.querySelector('.board-center')) {
     const center = document.createElement('div');
     center.className = 'board-center';
-    center.style.gridColumn = '2/11'; center.style.gridRow = '2/11';
+    center.style.gridColumn = '2/15'; center.style.gridRow = '2/7';
     center.innerHTML = `
       <div class="board-title">PIXEL<br>ESTATES</div>
       <div class="board-subtitle">♦ PROPERTY TRADING ♦</div>
       <div class="dice-area"><div class="die" id="die1">⚀</div><div class="die" id="die2">⚀</div></div>
     `;
     board.insertBefore(center, document.getElementById('tokens-layer'));
+    ['die1','die2'].forEach(id => {
+      document.getElementById(id).addEventListener('click', () => {
+        if (G.phase !== 'roll') return;
+        SFX.roll(); rollDice();
+      });
+    });
   }
 }
 
@@ -745,41 +770,107 @@ function buildCellContent(cell, sq) {
 // ════════════════════════════════════════════
 function buildSidebars() {
   const left = document.getElementById('side-left');
-  const right= document.getElementById('side-right');
+  const right = document.getElementById('side-right');
   left.innerHTML = ''; right.innerHTML = '';
-  G.players.forEach((p, i) => {
-    const card = document.createElement('div');
-    card.id = `pcard-${i}`;
-    if (i < 2) left.appendChild(card); else right.appendChild(card);
+
+  // ── Player nav (dots + arrows)
+  const navEl = document.createElement('div');
+  navEl.className = 'player-nav';
+
+  const prevBtn = document.createElement('button');
+  prevBtn.className = 'nav-arrow'; prevBtn.textContent = '◀';
+  prevBtn.addEventListener('click', () => {
+    G.viewedPlayer = (G.viewedPlayer - 1 + G.players.length) % G.players.length;
+    updateSidebars(); SFX.click();
   });
+
+  const dotsEl = document.createElement('div');
+  dotsEl.className = 'player-dots'; dotsEl.id = 'player-dots';
+
+  const nextBtn = document.createElement('button');
+  nextBtn.className = 'nav-arrow'; nextBtn.textContent = '▶';
+  nextBtn.addEventListener('click', () => {
+    G.viewedPlayer = (G.viewedPlayer + 1) % G.players.length;
+    updateSidebars(); SFX.click();
+  });
+
+  navEl.appendChild(prevBtn);
+  navEl.appendChild(dotsEl);
+  navEl.appendChild(nextBtn);
+  left.appendChild(navEl);
+
+  // ── Single player card
+  const cardEl = document.createElement('div');
+  cardEl.id = 'pcard-view';
+  left.appendChild(cardEl);
+
+  // ── Properties button
+  const propsBtn = document.createElement('button');
+  propsBtn.className = 'btn btn-purple btn-sm';
+  propsBtn.style.cssText = 'width:100%;margin-top:8px';
+  propsBtn.textContent = '🏠 PROPERTIES';
+  propsBtn.addEventListener('click', () => { showPropertiesModal(G.viewedPlayer); SFX.click(); });
+  left.appendChild(propsBtn);
+
+  // ── Collapsible log
+  const logHeader = document.createElement('div');
+  logHeader.className = 'log-header';
+  logHeader.innerHTML = '📋 HISTORY <span id="log-arrow">▶</span>';
+  logHeader.addEventListener('click', () => {
+    const panel = document.getElementById('log-panel');
+    const arrow = document.getElementById('log-arrow');
+    const collapsed = panel.classList.toggle('log-collapsed');
+    arrow.textContent = collapsed ? '▶' : '▼';
+  });
+  right.appendChild(logHeader);
+
   const logPanel = document.createElement('div');
-  logPanel.className = 'log-panel'; logPanel.id = 'log-panel';
+  logPanel.className = 'log-panel log-collapsed'; logPanel.id = 'log-panel';
   right.appendChild(logPanel);
+
   updateSidebars();
 }
 
 function updateSidebars() {
-  G.players.forEach((p, i) => {
-    const card = document.getElementById(`pcard-${i}`);
-    if (!card) return;
-    const props = Object.entries(G.ownership).filter(([,o]) => o===i).length;
-    const mortgCount = Object.entries(G.mortgaged).filter(([sqId,v]) => v && G.ownership[sqId]===i).length;
-    const isActive = i === G.current;
-    const statusClass = p.bankrupt ? '' : p.inJail ? 'status-jail' : isActive ? 'status-active' : 'status-waiting';
-    const statusLabel = p.bankrupt ? 'BANKRUPT' : p.inJail ? 'IN JAIL' : isActive ? 'ACTIVE' : 'WAITING';
-    card.className = `player-card${isActive?' active-turn':''}${p.bankrupt?' bankrupt':''}`;
-    card.innerHTML = `
-      <div class="pc-header">
-        <div class="pc-token">${p.token}</div>
-        <div class="pc-name">${p.name}</div>
-        <div class="pc-tag" style="color:${p.color};border-color:${p.color}">P${i+1}</div>
-      </div>
-      <div class="pc-money">$${p.money.toLocaleString()}</div>
-      <div class="pc-props">🏠 ${props} PROPS${mortgCount>0?` · 🏦 ${mortgCount} MRTG`:''}</div>
-      ${p.jailFreeCards>0?`<div class="pc-props">🎫 ${p.jailFreeCards} JAIL FREE</div>`:''}
-      <div class="pc-status ${statusClass}">${statusLabel}</div>
-    `;
-  });
+  // Update dots
+  const dotsEl = document.getElementById('player-dots');
+  if (dotsEl) {
+    dotsEl.innerHTML = '';
+    G.players.forEach((pl, i) => {
+      const dot = document.createElement('div');
+      dot.className = `player-dot${i === G.viewedPlayer ? ' active' : ''}${pl.bankrupt ? ' bankrupt' : ''}`;
+      dot.style.background = i === G.viewedPlayer ? pl.color : 'transparent';
+      dot.style.borderColor = pl.color;
+      dot.title = pl.name;
+      dot.addEventListener('click', () => { G.viewedPlayer = i; updateSidebars(); SFX.click(); });
+      dotsEl.appendChild(dot);
+    });
+  }
+
+  // Update player card
+  const card = document.getElementById('pcard-view');
+  if (!card) return;
+  const p = G.players[G.viewedPlayer];
+  if (!p) return;
+
+  const props = Object.entries(G.ownership).filter(([, o]) => o === G.viewedPlayer).length;
+  const mortgCount = Object.entries(G.mortgaged).filter(([sqId, v]) => v && G.ownership[sqId] === G.viewedPlayer).length;
+  const isActive = G.viewedPlayer === G.current;
+  const statusClass = p.bankrupt ? '' : p.inJail ? 'status-jail' : isActive ? 'status-active' : 'status-waiting';
+  const statusLabel = p.bankrupt ? 'BANKRUPT' : p.inJail ? 'IN JAIL' : isActive ? 'ACTIVE' : 'WAITING';
+  card.className = `player-card${isActive ? ' active-turn' : ''}${p.bankrupt ? ' bankrupt' : ''}`;
+  card.innerHTML = `
+    <div class="pc-header">
+      <div class="pc-token">${p.token}</div>
+      <div class="pc-name">${p.name}</div>
+      <div class="pc-tag" style="color:${p.color};border-color:${p.color}">P${G.viewedPlayer + 1}</div>
+    </div>
+    <div class="pc-money">$${p.money.toLocaleString()}</div>
+    <div class="pc-props">🏠 ${props} PROP${props !== 1 ? 'S' : ''}${mortgCount > 0 ? ` · 🏦 ${mortgCount} MRTG` : ''}</div>
+    ${p.jailFreeCards > 0 ? `<div class="pc-props">🎫 ${p.jailFreeCards} JAIL FREE</div>` : ''}
+    ${p.inJail ? `<div class="pc-props" style="color:var(--orange)">🚔 ${p.jailTurns}/3 JAIL TURNS</div>` : ''}
+    <div class="pc-status ${statusClass}">${statusLabel}</div>
+  `;
 }
 
 // ════════════════════════════════════════════
@@ -1449,6 +1540,46 @@ function executeTrade(proposer, target, fromProps, toProps, fromCash, toCash) {
 // ════════════════════════════════════════════
 //  MODALS
 // ════════════════════════════════════════════
+function showPropertiesModal(playerIdx) {
+  const p = G.players[playerIdx];
+  const ownedIds = Object.entries(G.ownership)
+    .filter(([, o]) => o === playerIdx)
+    .map(([sqId]) => parseInt(sqId))
+    .sort((a, b) => a - b);
+
+  document.getElementById('modal-title').textContent = `🏠 ${p.name}'S PROPERTIES`;
+
+  const bodyEl = document.getElementById('modal-body');
+  if (ownedIds.length === 0) {
+    bodyEl.innerHTML = '<div style="font-family:VT323,monospace;font-size:16px;color:var(--dim)">No properties owned yet.</div>';
+  } else {
+    bodyEl.innerHTML = ownedIds.map(id => {
+      const sq = SQUARES[id];
+      const color = sq.group ? COLOR_GROUPS[sq.group] : '#888';
+      const mortgaged = G.mortgaged[id];
+      const houses = G.houses[id] || 0;
+      const rentIdx = Math.min(houses, (sq.rent ? sq.rent.length - 1 : 0));
+      const rent = sq.rent ? sq.rent[rentIdx] : 0;
+      return `<div style="display:flex;align-items:center;gap:8px;padding:6px 8px;margin:3px 0;background:#0d0d14;border-left:4px solid ${color}">
+        <div style="flex:1;font-family:VT323,monospace;font-size:14px">
+          ${mortgaged ? '<span style="color:var(--red)">[MRTG]</span> ' : ''}${sq.name}
+          ${houses > 0 ? `<span style="font-size:11px"> ${houses === 5 ? '🏨' : '🏠'.repeat(houses)}</span>` : ''}
+        </div>
+        <div style="font-family:VT323,monospace;font-size:13px;color:var(--accent)">$${sq.price}</div>
+        <div style="font-family:VT323,monospace;font-size:12px;color:var(--dim)">rent $${rent}</div>
+      </div>`;
+    }).join('');
+  }
+
+  const actionsEl = document.getElementById('modal-actions');
+  actionsEl.innerHTML = '';
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'btn btn-dim btn-sm'; closeBtn.textContent = 'CLOSE';
+  closeBtn.addEventListener('click', closeModal);
+  actionsEl.appendChild(closeBtn);
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
 function showModal(title, body, buttons, cardType, cardText) {
   document.getElementById('modal-title').textContent = title;
   const bodyEl = document.getElementById('modal-body');
