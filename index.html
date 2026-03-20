@@ -22,7 +22,8 @@
     --brown:     #a16207;
     --text:      #e8e8f0;
     --dim:       #6b7280;
-    --cell:      18px;
+    --cell-w:    calc((100vw - 16px) / 11);
+    --cell-h:    var(--cell-w);
     --pixel:     2px;
   }
 
@@ -146,11 +147,11 @@
     gap: 0; width: 100%; max-width: 1200px;
     margin: 0 auto; padding: 8px; flex: 1; align-items: start;
   }
-  .board-wrap { grid-column: 1; grid-row: 1; justify-self: center; overflow-x: auto; max-width: 100%; }
+  .board-wrap { grid-column: 1; grid-row: 1; justify-self: center; }
   .board {
     display: grid;
-    grid-template-columns: repeat(11, var(--cell));
-    grid-template-rows: repeat(11, var(--cell));
+    grid-template-columns: repeat(11, var(--cell-w));
+    grid-template-rows: repeat(11, var(--cell-h));
     border: 3px solid var(--accent);
     box-shadow: 0 0 0 1px #000, 6px 6px 0 rgba(247,201,72,.3);
     background: #0d1a0d; image-rendering: pixelated; position: relative;
@@ -162,14 +163,14 @@
     font-size: 5px; position: relative; cursor: default; overflow: hidden; transition: filter .2s;
   }
   .cell:hover { filter: brightness(1.3); }
-  .cell-color-bar { width: 100%; height: 5px; position: absolute; top: 0; left: 0; }
+  .cell-color-bar { width: 100%; height: clamp(4px, calc(var(--cell-h) * 0.15), 10px); position: absolute; top: 0; left: 0; }
   .cell-name {
-    font-family: 'VT323', monospace; font-size: 7px; text-align: center;
-    color: #ccc; line-height: 1.1; padding: 0 1px; margin-top: 6px;
+    font-family: 'VT323', monospace; font-size: clamp(7px, calc(var(--cell-w) * 0.28), 14px); text-align: center;
+    color: #ccc; line-height: 1.1; padding: 0 1px; margin-top: clamp(5px, calc(var(--cell-h) * 0.18), 12px);
   }
-  .cell-price { font-family: 'VT323', monospace; font-size: 7px; color: var(--accent); position: absolute; bottom: 1px; }
+  .cell-price { font-family: 'VT323', monospace; font-size: clamp(7px, calc(var(--cell-w) * 0.26), 13px); color: var(--accent); position: absolute; bottom: 1px; }
   .cell-corner { background: #0a1f0a; }
-  .cell-corner .corner-label { font-family: 'VT323', monospace; font-size: 9px; color: var(--green); text-align: center; line-height: 1.2; }
+  .cell-corner .corner-label { font-family: 'VT323', monospace; font-size: clamp(8px, calc(var(--cell-w) * 0.3), 16px); color: var(--green); text-align: center; line-height: 1.2; }
   .cell-chance    { background: #1a150a; }
   .cell-community { background: #0a1015; }
   .cell-tax       { background: #150a0a; }
@@ -206,12 +207,15 @@
   }
   .tokens-layer { position: absolute; inset: 0; pointer-events: none; }
   .token {
-    position: absolute; width: 14px; height: 14px; border-radius: 0;
+    position: absolute;
+    width: clamp(12px, calc(var(--cell-w) * 0.5), 26px);
+    height: clamp(12px, calc(var(--cell-h) * 0.5), 26px);
+    border-radius: 0;
     border: 2px solid #fff; display: flex; align-items: center; justify-content: center;
-    font-size: 8px; transition: all .5s ease; z-index: 10; image-rendering: pixelated;
+    font-size: clamp(7px, calc(var(--cell-w) * 0.28), 14px); transition: all .5s ease; z-index: 10; image-rendering: pixelated;
   }
-  .owner-dot { width: 5px; height: 5px; position: absolute; bottom: 2px; right: 2px; }
-  .house-icon { position: absolute; bottom: 2px; left: 2px; font-size: 6px; }
+  .owner-dot { width: clamp(4px, calc(var(--cell-w) * 0.15), 8px); height: clamp(4px, calc(var(--cell-h) * 0.15), 8px); position: absolute; bottom: 2px; right: 2px; }
+  .house-icon { position: absolute; bottom: 2px; left: 2px; font-size: clamp(5px, calc(var(--cell-w) * 0.22), 10px); }
 
   /* ══ SIDEBARS ══ */
   .side-left  { grid-column: 1; grid-row: 2; padding: 0; }
@@ -346,25 +350,20 @@
 
   /* ══ RESPONSIVE — mobile-first ══ */
 
-  /* hide cell text on smallest screens */
-  .cell-name  { display: none; }
-  .cell-price { display: none; }
-
   /* touch-friendly button targets on mobile */
   .btn    { min-height: 44px; }
   .btn-sm { min-height: 40px; }
   .btn-xs { min-height: 36px; }
 
-  @media (min-width: 480px) {
-    :root { --cell: 22px; }
-    .cell-name  { display: block; }
-    .cell-price { display: block; }
-  }
-
   @media (min-width: 900px) {
-    :root { --cell: 28px; }
+    :root {
+      /* rectangular cells: width driven by remaining space after sidebars,
+         height driven by viewport height minus bottom bar */
+      --cell-w: clamp(28px, calc((100vw - 360px) / 11), 58px);
+      --cell-h: clamp(28px, calc((100vh - 90px)  / 11), 58px);
+    }
     .game-layout {
-      grid-template-columns: 1fr auto 1fr;
+      grid-template-columns: minmax(160px, 1fr) auto minmax(160px, 1fr);
       grid-template-rows: auto 1fr auto;
       padding: 12px;
     }
