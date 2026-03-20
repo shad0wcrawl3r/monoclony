@@ -22,7 +22,7 @@
     --brown:     #a16207;
     --text:      #e8e8f0;
     --dim:       #6b7280;
-    --cell-w:    calc((100vw - 16px) / 15);
+    --cell-w:    min(calc((100vw - 16px) / 7), calc((100dvh - 180px) / 15));
     --cell-h:    var(--cell-w);
     --pixel:     2px;
   }
@@ -142,8 +142,8 @@
   .board-wrap { grid-column: 1; grid-row: 1; justify-self: center; }
   .board {
     display: grid;
-    grid-template-columns: repeat(15, var(--cell-w));
-    grid-template-rows: repeat(7, var(--cell-h));
+    grid-template-columns: repeat(7, var(--cell-w));
+    grid-template-rows: repeat(15, var(--cell-h));
     border: 2px solid var(--accent);
     box-shadow: 0 0 24px rgba(247,201,72,.15);
     background: #0d1a0d; position: relative;
@@ -383,6 +383,10 @@
     :root {
       --cell-w: clamp(32px, calc((100vw - 360px) / 15), 70px);
       --cell-h: clamp(32px, calc((100vh - 90px)  / 7),  72px);
+    }
+    .board {
+      grid-template-columns: repeat(15, var(--cell-w));
+      grid-template-rows: repeat(7, var(--cell-h));
     }
     .game-layout {
       grid-template-columns: minmax(160px, 1fr) auto minmax(160px, 1fr);
@@ -692,21 +696,39 @@ document.getElementById('btn-start-game').addEventListener('click', () => {
 // ════════════════════════════════════════════
 //  BOARD
 // ════════════════════════════════════════════
+const DESKTOP_MQ = window.matchMedia('(min-width: 900px)');
+
 function squareGridPos(id) {
-  // 15-wide × 7-tall board (0-indexed)
-  if (id <= 14)  return [6, 14 - id];       // bottom row, right→left
-  if (id <= 19)  return [5 - (id - 15), 0]; // left col, bottom→top
-  if (id <= 34)  return [0, id - 20];        // top row, left→right
-  return [id - 34, 14];                       // right col, top→bottom
+  if (DESKTOP_MQ.matches) {
+    // Landscape 15-wide × 7-tall
+    if (id <= 14)  return [6, 14 - id];
+    if (id <= 19)  return [5 - (id - 15), 0];
+    if (id <= 34)  return [0, id - 20];
+    return [id - 34, 14];
+  } else {
+    // Portrait 7-wide × 15-tall
+    // right col top→bottom: sq 0..14
+    if (id <= 14) return [id, 6];
+    // bottom row right→left: sq 15..20
+    if (id <= 20) return [14, 20 - id];
+    // left col bottom→top: sq 21..34
+    if (id <= 34) return [34 - id, 0];
+    // top row left→right: sq 35..39
+    return [0, id - 34];
+  }
 }
 
 function buildBoard() {
   const board = document.getElementById('board');
-  board.querySelectorAll('.cell').forEach(c => c.remove());
+  board.querySelectorAll('.cell, .board-center').forEach(c => c.remove());
 
-  for (let row = 0; row < 7; row++) {
-    for (let col = 0; col < 15; col++) {
-      if (row >= 1 && row <= 5 && col >= 1 && col <= 13) continue;
+  const portrait = !DESKTOP_MQ.matches;
+  const COLS = portrait ? 7  : 15;
+  const ROWS = portrait ? 15 : 7;
+
+  for (let row = 0; row < ROWS; row++) {
+    for (let col = 0; col < COLS; col++) {
+      if (row >= 1 && row <= ROWS - 2 && col >= 1 && col <= COLS - 2) continue;
       const sq = SQUARES.find(s => { const [r,c] = squareGridPos(s.id); return r===row && c===col; });
       const cell = document.createElement('div');
       cell.className = 'cell';
@@ -718,24 +740,30 @@ function buildBoard() {
     }
   }
 
-  if (!board.querySelector('.board-center')) {
-    const center = document.createElement('div');
-    center.className = 'board-center';
-    center.style.gridColumn = '2/15'; center.style.gridRow = '2/7';
-    center.innerHTML = `
-      <div class="board-title">PIXEL<br>ESTATES</div>
-      <div class="board-subtitle">♦ PROPERTY TRADING ♦</div>
-      <div class="dice-area"><div class="die" id="die1">⚀</div><div class="die" id="die2">⚀</div></div>
-    `;
-    board.insertBefore(center, document.getElementById('tokens-layer'));
-    ['die1','die2'].forEach(id => {
-      document.getElementById(id).addEventListener('click', () => {
-        if (G.phase !== 'roll') return;
-        SFX.roll(); rollDice();
-      });
+  const center = document.createElement('div');
+  center.className = 'board-center';
+  center.style.gridColumn = portrait ? '2/7'  : '2/15';
+  center.style.gridRow    = portrait ? '2/15' : '2/7';
+  center.innerHTML = `
+    <div class="board-title">PIXEL<br>ESTATES</div>
+    <div class="board-subtitle">♦ PROPERTY TRADING ♦</div>
+    <div class="dice-area"><div class="die" id="die1">⚀</div><div class="die" id="die2">⚀</div></div>
+  `;
+  board.insertBefore(center, document.getElementById('tokens-layer'));
+  ['die1','die2'].forEach(id => {
+    document.getElementById(id).addEventListener('click', () => {
+      if (G.phase !== 'roll') return;
+      SFX.roll(); rollDice();
     });
-  }
+  });
 }
+
+// Rebuild board on orientation / breakpoint change
+DESKTOP_MQ.addEventListener('change', () => {
+  if (document.getElementById('screen-game').classList.contains('active')) {
+    buildBoard(); renderTokens(); updateUI();
+  }
+});
 
 const DIE_FACES = ['⚀','⚁','⚂','⚃','⚄','⚅'];
 
