@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 200%;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #0a0a0f;
+    color: #e2e8f0;
+  }
+
+  #root {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* Scanline overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.08) 2px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #12121a;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2a3d;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #f7c948;
+}
+
+/* Pixel button base */
+.pixel-btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 20px;
+  cursor: pointer;
+  border: 2px solid;
+  padding: 8px 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: transform 0.05s, box-shadow 0.05s;
+  image-rendering: pixelated;
+  user-select: none;
+}
+
+.pixel-btn:active {
+  transform: translateY(2px);
+  box-shadow: none !important;
+}
+
+.pixel-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Dice animation */
+@keyframes diceRoll {
+  0%   { transform: rotate(0deg) scale(1); }
+  25%  { transform: rotate(180deg) scale(1.2); }
+  50%  { transform: rotate(360deg) scale(0.9); }
+  75%  { transform: rotate(540deg) scale(1.1); }
+  100% { transform: rotate(720deg) scale(1); }
+}
+
+.dice-rolling {
+  animation: diceRoll 0.6s ease-in-out;
+}
+
+/* Token bounce animation */
+@keyframes tokenBounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-4px); }
+}
+
+.token-active {
+  animation: tokenBounce 0.8s ease-in-out infinite;
+}
+
+/* Modal backdrop */
+.modal-backdrop {
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(2px);
+}
+
+/* Property color strip */
+.color-strip {
+  height: 8px;
+  display: block;
+  width: 100%;
+}
+
+/* Blinking cursor for pixel text */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.blink {
+  animation: blink 1s step-end infinite;
+}
